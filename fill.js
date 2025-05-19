@@ -1,12 +1,12 @@
 (function () {
     // ✅ 問卷首頁
     if (document.querySelector('table') && location.href.includes("CourseList")) {
-        const rows = Array.from(document.querySelectorAll('table tr')).slice(1);
+        const rows = Array.from(document.querySelectorAll('table tr')).slice(1); // 跳過標題列
         const postbacks = [];
 
         rows.forEach(row => {
             const cells = row.querySelectorAll('td');
-            const fillStatus = cells[5]?.textContent.trim();
+            const fillStatus = cells[5]?.textContent.trim(); // 第六欄為「授課教師填寫狀態」
             if (fillStatus === '未填') {
                 const fillLink = row.querySelector('a[href*="__doPostBack"]');
                 if (fillLink) {
@@ -34,12 +34,12 @@
     }
 
     // ✅ 問卷填寫頁
-    const radios = document.querySelectorAll('input[type=radio]');
-    for (let radio of radios) {
-        if (/^5$/.test(radio.value)) {
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        const label = document.querySelector(`label[for="${radio.id}"]`);
+        if (label && label.textContent.trim() === "同意") {
             radio.checked = true;
         }
-    }
+    });
 
     // ✅ 簡答題填入「無」
     const textarea = document.querySelector('textarea');
@@ -51,7 +51,7 @@
         if (submitBtn) {
             submitBtn.click();
         }
-    }, 500);
+    }, 1000);
 
     // ✅ 送出後跳下一份
     setTimeout(() => {
