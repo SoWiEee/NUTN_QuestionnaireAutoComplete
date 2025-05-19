@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "問卷自動填寫器",
+    "version": "1.0",
+    "description": "自動填寫台南大學問卷，幫你節省時間。",
+    "permissions": ["scripting", "tabs", "storage"],
+    "host_permissions": ["<all_urls>"],
+    "action": {
+      "default_icon": "icon.png",
+      "default_title": "啟動自動填寫"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://academics.nutn.edu.tw/iSTU/T02/SelectCourse.aspx"],
+        "js": ["content.js"],
+        "run_at": "document_idle"
+      }
+    ]
+}  
